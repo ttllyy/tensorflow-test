@@ -8,6 +8,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+mnist_data/
+.idea/
 env/
 build/
 develop-eggs/

@@ -27,7 +27,7 @@ class MnistTest(object):
 
         cross_entropy = -tf.reduce_sum(y_*tf.log(y))
         # cross_entropy = -tf.reduce_sum(y_*tf.log(tf.clip_by_value(y,1e-10,1.0)))
-        
+
         train_step = tf.train.GradientDescentOptimizer(lrn_rate).minimize(cross_entropy)
 
         with tf.Session() as sess:
@@ -54,11 +54,17 @@ class MnistTest(object):
 
 
 
-
+def testReshape():
+    import numpy as np
+    a = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+    b = a.reshape([-1, 2])
+    c = a.reshape([1, 2, 4])
+    print(b)
+    print(c)
 
 if __name__ == "__main__":
     print("test begin...")
-
+    # testShape()
     testInst = MnistTest()
     testInst.regress()
 

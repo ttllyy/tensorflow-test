@@ -1,5 +1,6 @@
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
+from PIL import Image
 
 class MnistTest(object):
     def __init__(self):
@@ -12,7 +13,7 @@ class MnistTest(object):
     #     self.mnist = mnist
 
     def regress(self):
-        max_step = 10000
+        max_step = 1000
         x = tf.placeholder(tf.float32, [None, 784])
         W = tf.Variable(tf.zeros([784, 10], name='W'))
         b = tf.Variable(tf.zeros([10]))
@@ -49,23 +50,34 @@ class MnistTest(object):
             print(sess.run(acc, feed_dict={x: self.mnist.test.images, y_: self.mnist.test.labels}))
             print(self.mnist.test.labels)
 
+    def covertImage(self):
+        newImage = Image.new('L', (28, 28)) #转化成黑白的（L表示黑白模式）
+        a = self.mnist.test.images[1].reshape([28, 28])
+        print(a)
+        a = a * 256
+        print(a)
+        for y in range(28):
+            for x in range(28):
+                newImage.putpixel((x, y), int(a[x][y]))
+
+        # img = Image.fromarray(a)
+        # if img.mode != 'L':
+        #     img = img.convert('L')
+        newImage.save("3.png")
+
+        import matplotlib.pyplot as plt
+        import matplotlib.cm as cm
+        pic = self.mnist.test.images[1].reshape([28, 28])
+        plt.imshow(pic,cmap = cm.binary)
+        plt.show()
 
 
 
-
-
-def testReshape():
-    import numpy as np
-    a = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-    b = a.reshape([-1, 2])
-    c = a.reshape([1, 2, 4])
-    print(b)
-    print(c)
 
 if __name__ == "__main__":
     print("test begin...")
-    # testShape()
     testInst = MnistTest()
-    testInst.regress()
+    testInst.covertImage()
+    # testInst.regress()
 
     print("test end...")
